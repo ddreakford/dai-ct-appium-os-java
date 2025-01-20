@@ -4,7 +4,8 @@ This project contains a test for the automotive projection capability using Appi
 
 ## Prerequisites
 - Appium
-- OpenCV
+- OpenCV - OpenCV is an open-source computer vision library.
+  Using matchTemplate method of OpenCV to find the location of elements on the DHU screen and interact with it.
 See build.gradle file
 
 ## Setup
@@ -19,7 +20,8 @@ The test performs the following steps:
 
 1. Sets up the desired capabilities for the Android driver.
 2. Launches the Google Maps application.
-3. Simulates location playback using a predefined file.
+3. Simulates location playback using a predefined file. file should be uploaded to file repository first. for more info: 
+https://docs.digital.ai/continuous-testing/docs/te/test-execution-home/mobile-android-and-ios/appium/seetest-appium-extension/device-commands/setlocationplaybackfile
 4. Uses OpenCV to find and interact with UI elements in the DHU (Desktop Head Unit) screenshot.
 5. Taps on the search bar, enters a location, and starts navigation.
 

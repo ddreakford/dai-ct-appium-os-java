@@ -43,6 +43,8 @@ public class automotiveProjectionAndroidTest {
 
     @Test
     public void quickStartAndroidNativeDemo() throws InterruptedException {
+        // this method walks through the values in the given file and sets the location after the delay in the delay parameter.
+        // This is used to simulate the movement of a device. for more info see step 3 in test description
         driver.executeScript("seetest:client.setLocationPlaybackFile", "cloud:locationPoints", 1000, "gps");
 
         Mat searchBarImage = Imgcodecs.imread("searchBar.png");
@@ -57,10 +59,13 @@ public class automotiveProjectionAndroidTest {
         Thread.sleep(5000);
         Mat startButtonImage = Imgcodecs.imread("startButton.png");
         findImageAndTapUsingOpencv(getDHUScreenshotAsMat(), startButtonImage);
-        Thread.sleep(15000);
-        driver.executeScript("digitalai:automotive.tap", 500, 120);
     }
 
+    /**
+     * Captures a screenshot from the DHU (Desktop Head Unit) and converts it to a Mat object(from Opencv Library).
+     *
+     * @return A Mat object containing the DHU screenshot.
+     */
     private Mat getDHUScreenshotAsMat() {
         String base64String = (String) driver.executeScript("digitalai:automotive.getScreenshot");
         byte[] decodedBytes = Base64.getDecoder().decode(base64String);
@@ -74,6 +79,11 @@ public class automotiveProjectionAndroidTest {
         return Imgcodecs.imread("screenshot.png");
     }
 
+    /**
+     * Finds the template Using matchTemplate method image within the input image using OpenCV and taps on the found location.
+     * @param inputImage    The input image in which to search for the template.
+     * @param templateImage The template image to find within the input image.
+     */
     private void findImageAndTapUsingOpencv(Mat inputImage, Mat templateImage) {
         if (inputImage.empty() || templateImage.empty()) {
             System.out.println("Error loading images!");
