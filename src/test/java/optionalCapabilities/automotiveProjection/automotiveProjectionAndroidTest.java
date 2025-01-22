@@ -30,13 +30,13 @@ public class automotiveProjectionAndroidTest {
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
+        dc.setCapability("testName", "Android Auto quick start test");
         dc.setCapability("accessKey", ACCESS_KEY);
         dc.setCapability("appiumVersion", APPIUM_VERSION);
         dc.setCapability("deviceQuery", "@os='android'");
         dc.setCapability("appPackage", "com.google.android.apps.maps");
         dc.setCapability("appActivity", "com.google.android.maps.MapsActivity");
         dc.setCapability("digitalai:automotiveProjection", DHU_SCREEN_SIZE);
-        dc.setCapability("appiumVersion", "2.12.1");
         dc.setCapability("autoGrantPermissions", true); //for location permission
         driver = new AndroidDriver<>(new URL(CLOUD_URL), dc);
     }
@@ -101,7 +101,8 @@ public class automotiveProjectionAndroidTest {
             if (result.get((int) p.y, (int) p.x)[0] >= 0.8) {
                 System.out.println("Found image at " + p);
                 driver.executeScript("digitalai:automotive.tap", p.x, p.y);
-                foundImage = true; // opencv can find multiple matches of same element, but we only want to tap once
+                foundImage = true;
+                break; // opencv can find multiple matches of same element, but we only want to tap once
             }
         }
         if (!foundImage) {

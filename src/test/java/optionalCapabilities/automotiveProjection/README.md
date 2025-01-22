@@ -22,8 +22,9 @@ The test performs the following steps:
 2. Launches the Google Maps application.
 3. Simulates location playback using a predefined file. file should be uploaded to file repository first. for more info: 
 https://docs.digital.ai/continuous-testing/docs/te/test-execution-home/mobile-android-and-ios/appium/seetest-appium-extension/device-commands/setlocationplaybackfile
-4. Uses OpenCV to find and interact with UI elements in the DHU (Desktop Head Unit) screenshot.
-5. Taps on the search bar, enters a location, and starts navigation.
+4. capture an image of the elements on the DHU screen that you want to interact with (in this example we will tap on location, exit, start buttons and on search bar).
+5. Uses OpenCV to find and interact with UI elements in the DHU screen.
+6. Taps on the search bar, enters a location, and starts navigation.
 
 ## Additional Information
 
