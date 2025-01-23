@@ -1,6 +1,8 @@
 # Automotive Projection Android Test
 
 This project contains a test for the automotive projection capability using Appium and OpenCV.
+*This test example was created for automotive with "800x480" screen size and Google Maps application.
+images on resources folder where taken from that screen, if you are using a different screen size you should take images from your screen.*
 
 ## Prerequisites
 - Appium
