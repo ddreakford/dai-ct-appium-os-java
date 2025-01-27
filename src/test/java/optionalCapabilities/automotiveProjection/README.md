@@ -3,7 +3,7 @@
 This project contains a test for the automotive projection capability using Appium and OpenCV.
 
 Test example was created for automotive with "800x480" screen size and Google Maps application.
-images on resources folder were taken from that screen, if you are using a different screen size you should take images from your screen.
+Images on resources folder were taken from that screen, if you are using a different screen size you should take images from your screen.
 
 ## Prerequisites
 - Appium
@@ -25,7 +25,7 @@ The test performs the following steps:
 2. Launches the Google Maps application.
 3. Simulates location playback using a predefined file. file should be uploaded to file repository first. for more info: 
 https://docs.digital.ai/continuous-testing/docs/te/test-execution-home/mobile-android-and-ios/appium/seetest-appium-extension/device-commands/setlocationplaybackfile
-4. capture an image of the elements on the DHU screen that you want to interact with (in this example we will tap on location, exit, start buttons and on search bar).
+4. Capture an image of the elements on the DHU screen that you want to interact with (in this example we will tap on location, exit, start buttons and on search bar).
 5. Uses OpenCV to find and interact with UI elements in the DHU screen.
 6. Taps on the search bar, enters a location, and starts navigation.
 
