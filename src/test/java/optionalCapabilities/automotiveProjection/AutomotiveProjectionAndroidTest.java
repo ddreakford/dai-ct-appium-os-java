@@ -47,7 +47,7 @@ public class AutomotiveProjectionAndroidTest {
         // This method walks through the values in the given file and sets the location after the delay in the delay parameter.
         // This is used to simulate the movement of a device. For more info see step 3 in test description
         driver.executeScript("seetest:client.setLocationPlaybackFile", "cloud:locationPoints", 1000, "gps");
-        Thread.sleep(3000);
+        Thread.sleep(5000);
 
         //on 800x480 screen, side menu can interrupt the applications view, so we need to make sure the app is on full screen
         makeSureAppOnFullScreen();
