@@ -51,6 +51,7 @@ public class AutomotiveProjectionAndroidTest {
 
         //on 800x480 screen, side menu can interrupt the applications view, so we need to make sure the app is on full screen
         makeSureAppOnFullScreen();
+        Thread.sleep(3000);
         Mat searchBarImage = Imgcodecs.imread("searchBar.png");
         Point pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), searchBarImage);
         driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
@@ -114,12 +115,11 @@ public class AutomotiveProjectionAndroidTest {
     }
 
     private void makeSureAppOnFullScreen() {
-        Mat menuButtonImage = Imgcodecs.imread("menuButton.png");
+        Mat menuButtonImage = Imgcodecs.imread("menuButto1n.png");
         try {
             findImageUsingOpencv(getDHUScreenshotAsMat(), menuButtonImage);
             driver.executeScript("digitalai:automotive.tap", 200, 200); //tap in the middle of the screen
-            Thread.sleep(3000);
-        }catch (Exception ignored){
+        }catch (RuntimeException ignored){
             System.out.println("App is already on full screen");
         }
     }
