@@ -1,5 +1,6 @@
 package optionalCapabilities.automotiveProjection;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.junit.jupiter.api.*;
@@ -15,7 +16,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Base64;
 
-public class automotiveProjectionAndroidTest {
+public class AutomotiveProjectionAndroidTest {
 
     static {
         nu.pattern.OpenCV.loadLocally(); // Load OpenCV native library
@@ -46,19 +47,28 @@ public class automotiveProjectionAndroidTest {
         // This method walks through the values in the given file and sets the location after the delay in the delay parameter.
         // This is used to simulate the movement of a device. For more info see step 3 in test description
         driver.executeScript("seetest:client.setLocationPlaybackFile", "cloud:locationPoints", 1000, "gps");
+        Thread.sleep(5000);
 
-        Mat searchBarImage = Imgcodecs.imread("searchBar.png");
-        findImageAndTapUsingOpencv(getDHUScreenshotAsMat(), searchBarImage);
+        //on 800x480 screen, side menu can interrupt the applications view, so we need to make sure the app is on full screen
+        makeSureAppOnFullScreen();
         Thread.sleep(3000);
-        driver.findElement(By.xpath("//*[@resource-id='com.google.android.projection.gearhead:id/open_search_view_edit_text']")).sendKeys("tel aviv");
+        Mat searchBarImage = Imgcodecs.imread("searchBar.png");
+        Point pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), searchBarImage);
+        driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
+        Thread.sleep(3000);
+        pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), searchBarImage);
+        driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
+        Thread.sleep(3000);
 
-        driver.executeScript("digitalai:automotive.tap", 500, 30);
+        //send keys to keyboard on mobile device
+        driver.findElement(By.xpath("//*[@resource-id='com.google.android.projection.gearhead:id/open_search_view_edit_text']")).sendKeys("tel aviv");
+        driver.executeScript( "mobile: performEditorAction", ImmutableMap.of("action", "Search"));
         Thread.sleep(5000);
-        Mat locationIconImage = Imgcodecs.imread("locationIcon.png");
-        findImageAndTapUsingOpencv(getDHUScreenshotAsMat(), locationIconImage);
-        Thread.sleep(5000);
+
         Mat startButtonImage = Imgcodecs.imread("startButton.png");
-        findImageAndTapUsingOpencv(getDHUScreenshotAsMat(), startButtonImage);
+        pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), startButtonImage);
+        driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
+        Thread.sleep(5000);
     }
 
     /**
@@ -80,14 +90,13 @@ public class automotiveProjectionAndroidTest {
     }
 
     /**
-     * Finds the template Using matchTemplate method image within the input image using OpenCV and taps on the found location.
+     * Finds the template Using matchTemplate method image within the input image using OpenCV.
      * @param inputImage    The input image in which to search for the template.
      * @param templateImage The template image to find within the input image.
      */
-    private void findImageAndTapUsingOpencv(Mat inputImage, Mat templateImage) {
+    private Point findImageUsingOpencv(Mat inputImage, Mat templateImage) {
         if (inputImage.empty() || templateImage.empty()) {
-            System.out.println("Error loading images!");
-            return;
+            throw new RuntimeException("Error loading images");
         }
 
         Mat result = new Mat();
@@ -95,18 +104,23 @@ public class automotiveProjectionAndroidTest {
         MatOfPoint points = new MatOfPoint();
 
         Core.findNonZero(result, points);
-        boolean foundImage = false;
         for (Point p : points.toList()) {
             // Check if the result at this location is above the threshold
             if (result.get((int) p.y, (int) p.x)[0] >= 0.8) {
                 System.out.println("Found image at " + p);
-                driver.executeScript("digitalai:automotive.tap", p.x, p.y);
-                foundImage = true;
-                break; // opencv can find multiple matches of same element, but we only want to tap once
+                return p;
             }
         }
-        if (!foundImage) {
-            System.out.println("No image found.");
+        throw new RuntimeException("Cannot find required image on the screen");
+    }
+
+    private void makeSureAppOnFullScreen() {
+        Mat menuButtonImage = Imgcodecs.imread("menuButton.png");
+        try {
+            findImageUsingOpencv(getDHUScreenshotAsMat(), menuButtonImage);
+            driver.executeScript("digitalai:automotive.tap", 200, 200); //tap in the middle of the screen
+        }catch (RuntimeException ignored){
+            System.out.println("App is already on full screen");
         }
     }
 
