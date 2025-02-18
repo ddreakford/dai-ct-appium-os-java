@@ -119,7 +119,7 @@ public class AutomotiveProjectionAndroidTest {
     }
 
     private void makeSureAppOnFullScreen() {
-        Mat menuButtonImage = Imgcodecs.imread("menuButton.png");
+        Mat menuButtonImage = Imgcodecs.imread(Resources.getResource("menuButton.png").getPath());
         try {
             findImageUsingOpencv(getDHUScreenshotAsMat(), menuButtonImage);
             driver.executeScript("digitalai:automotive.tap", 200, 200); //tap in the middle of the screen
