@@ -56,7 +56,7 @@ public class AutomotiveProjectionAndroidTest {
         //on 800x480 screen, side menu can interrupt the applications view, so we need to make sure the app is on full screen
         makeSureAppOnFullScreen();
         Thread.sleep(3000);
-        Mat searchBarImage = Imgcodecs.imread(Resources.getResource("searchBar.png").getPath());
+        Mat searchBarImage = Imgcodecs.imread(Resources.getResource("searchBar.png").getFile());
         Point pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), searchBarImage);
         driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
         Thread.sleep(3000);
@@ -69,7 +69,7 @@ public class AutomotiveProjectionAndroidTest {
         driver.executeScript( "mobile: performEditorAction", ImmutableMap.of("action", "Search"));
         Thread.sleep(5000);
 
-        Mat startButtonImage = Imgcodecs.imread(Resources.getResource("startButton.png").getPath());
+        Mat startButtonImage = Imgcodecs.imread(Resources.getResource("startButton.png").getFile());
         pointToTap = findImageUsingOpencv(getDHUScreenshotAsMat(), startButtonImage);
         driver.executeScript("digitalai:automotive.tap", pointToTap.x, pointToTap.y);
         Thread.sleep(5000);
@@ -119,7 +119,7 @@ public class AutomotiveProjectionAndroidTest {
     }
 
     private void makeSureAppOnFullScreen() {
-        Mat menuButtonImage = Imgcodecs.imread(Resources.getResource("menuButton.png").getPath());
+        Mat menuButtonImage = Imgcodecs.imread(Resources.getResource("menuButton.png").getFile());
         try {
             findImageUsingOpencv(getDHUScreenshotAsMat(), menuButtonImage);
             driver.executeScript("digitalai:automotive.tap", 200, 200); //tap in the middle of the screen
