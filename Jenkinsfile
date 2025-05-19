@@ -22,7 +22,7 @@ pipeline {
       steps {       
         // Run the tests
         sh '''
-          gradle -v
+          gradle --version
         '''
       }
     }
