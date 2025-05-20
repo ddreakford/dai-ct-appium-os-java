@@ -1,6 +1,6 @@
 pipeline {
   agent { 
-    docker  { image 'gradle/gradle:8.14-jdk21' }
+    docker  { image 'gradle' }
   }
   stages {
     // stage('Env Prep') {
