@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'gradle'
-                    args "-e CT_URL=$CT_URL -e CT_ACCESS_KEY=$CT_ACCESS_KEY_ID"
+                    args "-e CT_URL=$CT_URL"
 
                     // To run the container on the node specified at the
                     // top-level of the Pipeline, in the same workspace,
@@ -14,13 +14,11 @@ pipeline {
                 }
             }
             steps {
-                sh """
-                  gradle -g gradle-user-home test --tests "quickStartTests.*"
-                """
-                // sh """
-                //   gradle -g gradle-user-home --version
-                // """
+                withCredentials([string(credentialsId: 'CT_ACCESS_KEY_ID', variable: 'CT_ACCESS_KEY')]) {
+                  sh '''
+                    gradle -g gradle-user-home test --tests "quickStartTests.*"
+                  '''
+                }
             }
-        }
     }
 }
