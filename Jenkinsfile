@@ -5,7 +5,8 @@ pipeline {
             agent {
                 docker {
                     image 'gradle'
-                    
+                    args '-v "$PWD":/home/gradle/project -e CT_URL=$CT_URL -e CT_ACCESS_KEY=$CT_ACCESS_KEY -w /home/gradle/project'
+
                     // To run the container on the node specified at the
                     // top-level of the Pipeline, in the same workspace,
                     // rather than on a new node entirely:
@@ -14,8 +15,11 @@ pipeline {
             }
             steps {
                 sh """
-                  gradle -g gradle-user-home --version
+                  gradle -g gradle-user-home test --tests "quickStartTests.*"
                 """
+                // sh """
+                //   gradle -g gradle-user-home --version
+                // """
             }
         }
     }
