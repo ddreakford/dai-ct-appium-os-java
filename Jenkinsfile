@@ -1,19 +1,22 @@
 pipeline {
-  agent { 
-    docker  { image 'gradle' }
-  }
-  stages {
-    // stage('Env Prep') {
-    //   steps {
-    //   }
-    // }
-    stage('Test') {
-      steps {       
-        // Run the tests
-        sh '''
-          gradle --version
-        '''
-      }
+    agent any
+    stages {
+        stage('Test') {
+            agent {
+                docker {
+                    image 'gradle'
+                    
+                    // To run the container on the node specified at the
+                    // top-level of the Pipeline, in the same workspace,
+                    // rather than on a new node entirely:
+                    // reuseNode true
+                }
+            }
+            steps {
+                sh """
+                  gradle -g gradle-user-home --version
+                """
+            }
+        }
     }
-  }
 }
