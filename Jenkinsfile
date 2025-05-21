@@ -6,15 +6,11 @@ pipeline {
                 docker {
                     image 'gradle'
                     args "-e CT_URL=$CT_URL"
-
-                    // To run the container on the node specified at the
-                    // top-level of the Pipeline, in the same workspace,
-                    // rather than on a new node entirely:
-                    // reuseNode true
                 }
             }
             steps {
                 withCredentials([string(credentialsId: 'CT_CLOUD_ACCESS_KEY_ID', variable: 'CT_ACCESS_KEY')]) {
+                  // Run the quickstart tests
                   sh '''
                     gradle -g gradle-user-home test --tests "quickStartTests.*"
                   '''
