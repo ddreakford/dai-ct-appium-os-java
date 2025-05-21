@@ -16,15 +16,17 @@ class AndroidQuickStartTest {
 
     AndroidDriver<AndroidElement> driver = null;
     DesiredCapabilities dc = new DesiredCapabilities();
-    final String CLOUD_URL = "<CLOUD_URL>" + "/wd/hub";
-    final String ACCESS_KEY = "<ACCESS_KEY>";
-    final String APPIUM_VERSION = "<APPIUM_VERSION>";
+    final String CLOUD_URL = System.getenv("CT_URL") + "/wd/hub";
+    final String ACCESS_KEY = System.getenv("CT_ACCESS_KEY");
+    final String APPIUM_VERSION = System.getenv("APPIUM_VERSION");
 
     @BeforeEach
     public void setUp() throws MalformedURLException {
         dc.setCapability("accessKey", ACCESS_KEY);
-        dc.setCapability("appiumVersion", APPIUM_VERSION);
-        dc.setCapability("deviceQuery", "@os='android'");
+        if (APPIUM_VERSION != null && APPIUM_VERSION.length() > 0 ) {
+            dc.setCapability("appiumVersion", APPIUM_VERSION);
+        }
+        dc.setCapability("deviceQuery", "@os='android' and contains(@name, 'Galaxy S2')");
         dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,  "UiAutomator2");
         dc.setCapability("testName", "Run Quickstart test on Android device");
         dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");
