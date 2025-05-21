@@ -5,7 +5,7 @@ pipeline {
             agent {
                 docker {
                     image 'gradle'
-                    args "-e CT_URL=$CT_URL -e CT_ACCESS_KEY=$CT_ACCESS_KEY"
+                    args "-e CT_URL=$CT_URL -e CT_ACCESS_KEY=$CT_ACCESS_KEY_ID"
 
                     // To run the container on the node specified at the
                     // top-level of the Pipeline, in the same workspace,
