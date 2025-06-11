@@ -12,7 +12,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'CT_CLOUD_ACCESS_KEY_ID', variable: 'CT_ACCESS_KEY')]) {
                   // Run the quickstart tests
                   sh '''
-                    gradle -g gradle-user-home test --tests "quickStartTests.*"
+                    gradle -g gradle-user-home clean test --tests "quickStartTests.*"
                   '''
                 }
             }
