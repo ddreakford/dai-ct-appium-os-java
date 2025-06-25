@@ -26,7 +26,7 @@ class AndroidQuickStartTest {
         if (APPIUM_VERSION != null && APPIUM_VERSION.length() > 0 ) {
             dc.setCapability("appiumVersion", APPIUM_VERSION);
         }
-        dc.setCapability("deviceQuery", "@os='android' and contains(@name, 'Galaxy S2')");
+        dc.setCapability("deviceQuery", "@os='android' and contains(@name, 'Galaxy')");
         dc.setCapability(MobileCapabilityType.AUTOMATION_NAME,  "UiAutomator2");
         dc.setCapability("testName", "Run Quickstart test on Android device");
         dc.setCapability(MobileCapabilityType.APP, "cloud:com.experitest.ExperiBank/.LoginActivity");
