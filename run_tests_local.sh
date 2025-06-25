@@ -2,8 +2,11 @@
 #
 # Run sample tests locally via Docker
 
-# docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle <gradle-task>
+export CT_URL="https://cloud.testing.com"
+export CT_ACCESS_KEY="your_access_key_here"
 
+# docker run --rm -u gradle -v "$PWD":/home/gradle/project -w /home/gradle/project gradle gradle <gradle-task>
+#
 docker run --rm \
 -v "$PWD":/home/gradle/project \
 -e CT_URL=$CT_URL \
